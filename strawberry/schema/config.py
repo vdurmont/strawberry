@@ -28,4 +28,10 @@ class StrawberryConfig:
             raise TypeError("`info_class` must be a subclass of strawberry.Info")
 
 
-__all__ = ["StrawberryConfig"]
+@dataclass
+class SchemaIdentifier:
+    name: str
+    version: str
+
+
+__all__ = ["StrawberryConfig", "SchemaIdentifier"]

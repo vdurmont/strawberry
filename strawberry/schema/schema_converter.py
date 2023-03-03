@@ -13,7 +13,6 @@ from typing import (
     Union,
     cast,
 )
-from typing_extensions import Protocol
 
 from graphql import (
     GraphQLAbstractType,
@@ -37,6 +36,7 @@ from graphql import (
     default_type_resolver,
 )
 from graphql.language.directive_locations import DirectiveLocation
+from typing_extensions import Protocol
 
 from strawberry.annotation import StrawberryAnnotation
 from strawberry.exceptions import (
@@ -48,6 +48,7 @@ from strawberry.exceptions import (
     UnresolvedFieldTypeError,
 )
 from strawberry.extensions.field_extension import build_field_extension_resolvers
+from strawberry.identifier import SchemaIdentifier
 from strawberry.schema.types.scalar import _make_scalar_type
 from strawberry.types.arguments import StrawberryArgument, convert_arguments
 from strawberry.types.base import (
@@ -111,8 +112,13 @@ def _get_thunk_mapping(
     type_definition: StrawberryObjectDefinition,
     name_converter: Callable[[StrawberryField], str],
     field_converter: FieldConverterProtocol[FieldType],
+<<<<<<< HEAD
     get_fields: Callable[[StrawberryObjectDefinition], list[StrawberryField]],
 ) -> dict[str, FieldType]:
+=======
+    schema_identifier: Optional[SchemaIdentifier],
+) -> Dict[str, FieldType]:
+>>>>>>> 78c24732 (Add support for `supported_schemas`)
     """Create a GraphQL core `ThunkMapping` mapping of field names to field types.
 
     This method filters out remaining `strawberry.Private` annotated fields that
@@ -134,7 +140,9 @@ def _get_thunk_mapping(
         if field_type is UNRESOLVED:
             raise UnresolvedFieldTypeError(type_definition, field)
 
-        if not is_private(field_type):
+        if not is_private(field_type) and _is_schema_supported(
+            schema_identifier, field
+        ):
             thunk_mapping[name_converter(field)] = field_converter(
                 field,
                 type_definition=type_definition,
@@ -242,6 +250,7 @@ class GraphQLCoreConverter:
     def __init__(
         self,
         config: StrawberryConfig,
+<<<<<<< HEAD
         scalar_registry: dict[object, Union[ScalarWrapper, ScalarDefinition]],
         get_fields: Callable[[StrawberryObjectDefinition], list[StrawberryField]],
     ) -> None:
@@ -249,6 +258,15 @@ class GraphQLCoreConverter:
         self.config = config
         self.scalar_registry = scalar_registry
         self.get_fields = get_fields
+=======
+        scalar_registry: Dict[object, Union[ScalarWrapper, ScalarDefinition]],
+        schema_identifier: Optional[SchemaIdentifier] = None,
+    ):
+        self.type_map: Dict[str, ConcreteType] = {}
+        self.config = config
+        self.scalar_registry = scalar_registry
+        self.schema_identifier = schema_identifier
+>>>>>>> 78c24732 (Add support for `supported_schemas`)
 
     def from_argument(self, argument: StrawberryArgument) -> GraphQLArgument:
         argument_type = cast(
@@ -442,7 +460,11 @@ class GraphQLCoreConverter:
             type_definition=type_definition,
             name_converter=self.config.name_converter.from_field,
             field_converter=self.from_field,
+<<<<<<< HEAD
             get_fields=self.get_fields,
+=======
+            schema_identifier=self.schema_identifier,
+>>>>>>> 78c24732 (Add support for `supported_schemas`)
         )
 
     def get_graphql_input_fields(
@@ -452,7 +474,11 @@ class GraphQLCoreConverter:
             type_definition=type_definition,
             name_converter=self.config.name_converter.from_field,
             field_converter=self.from_input_field,
+<<<<<<< HEAD
             get_fields=self.get_fields,
+=======
+            schema_identifier=self.schema_identifier,
+>>>>>>> 78c24732 (Add support for `supported_schemas`)
         )
 
     def from_input_object(self, object_type: type) -> GraphQLInputObjectType:
@@ -1003,4 +1029,22 @@ class GraphQLCoreConverter:
         raise DuplicatedTypeName(first_origin, second_origin, name)
 
 
+<<<<<<< HEAD
 __all__ = ["GraphQLCoreConverter"]
+=======
+def _is_schema_supported(
+    schema_identifier: Optional[SchemaIdentifier],
+    field: StrawberryField,
+) -> bool:
+    supported_schemas = field.supported_schemas or []
+    if not supported_schemas:
+        # If we don't define any specific schema to support, we support everything
+        return True
+    for schema in supported_schemas:
+        if schema.matches(schema_identifier):
+            # We try to find a supported schema that would match the current
+            # name and version
+            return True
+    # Nothing was found, the schema is not supported at all.
+    return False
+>>>>>>> 78c24732 (Add support for `supported_schemas`)

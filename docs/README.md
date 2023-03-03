@@ -35,6 +35,7 @@ title: Strawberry docs
 - [Lazy types](./types/lazy.md)
 - [Exceptions](./types/exceptions.md)
 - [Private/External Fields](./types/private.md)
+- [Supported schemas](./types/supported-schemas.md)
 
 ## Codegen
 

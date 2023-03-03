@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 import warnings
 from asyncio import ensure_future
 from collections.abc import AsyncGenerator, AsyncIterator, Awaitable, Iterable
@@ -45,6 +46,7 @@ from strawberry.extensions.directives import (
 )
 from strawberry.extensions.runner import SchemaExtensionsRunner
 from strawberry.printer import print_schema
+from strawberry.identifier import SchemaIdentifier
 from strawberry.schema.schema_converter import GraphQLCoreConverter
 from strawberry.schema.types.scalar import DEFAULT_SCALAR_REGISTRY
 from strawberry.schema.validation_rules.one_of import OneOfInputValidationRule
@@ -153,6 +155,7 @@ class Schema(BaseSchema):
             dict[object, Union[type, ScalarWrapper, ScalarDefinition]],
         ] = None,
         schema_directives: Iterable[object] = (),
+<<<<<<< HEAD
     ) -> None:
         """Default Schema to be used in a Strawberry application.
 
@@ -189,6 +192,10 @@ class Schema(BaseSchema):
         schema = strawberry.Schema(query=Query)
         ```
         """
+=======
+        schema_identifier: Optional[SchemaIdentifier] = None,
+    ):
+>>>>>>> 78c24732 (Add support for `supported_schemas`)
         self.query = query
         self.mutation = mutation
         self.subscription = subscription
@@ -197,6 +204,7 @@ class Schema(BaseSchema):
         self._cached_middleware_manager: MiddlewareManager | None = None
         self.execution_context_class = execution_context_class
         self.config = config or StrawberryConfig()
+        self.schema_identifier = schema_identifier
 
         SCALAR_OVERRIDES_DICT_TYPE = dict[
             object, Union["ScalarWrapper", "ScalarDefinition"]
@@ -208,7 +216,11 @@ class Schema(BaseSchema):
             scalar_registry.update(cast(SCALAR_OVERRIDES_DICT_TYPE, scalar_overrides))
 
         self.schema_converter = GraphQLCoreConverter(
+<<<<<<< HEAD
             self.config, scalar_registry, self.get_fields
+=======
+            self.config, scalar_registry, self.schema_identifier
+>>>>>>> 78c24732 (Add support for `supported_schemas`)
         )
         self.directives = directives
         self.schema_directives = list(schema_directives)
