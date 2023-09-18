@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 import warnings
 from asyncio import ensure_future
 from collections.abc import AsyncGenerator, AsyncIterator, Awaitable, Iterable
@@ -44,9 +43,12 @@ from strawberry.extensions.directives import (
     DirectivesExtension,
     DirectivesExtensionSync,
 )
+<<<<<<< HEAD
 from strawberry.extensions.runner import SchemaExtensionsRunner
 from strawberry.printer import print_schema
 from strawberry.identifier import SchemaIdentifier
+=======
+>>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
 from strawberry.schema.schema_converter import GraphQLCoreConverter
 from strawberry.schema.types.scalar import DEFAULT_SCALAR_REGISTRY
 from strawberry.schema.validation_rules.one_of import OneOfInputValidationRule
@@ -78,6 +80,7 @@ if TYPE_CHECKING:
     from graphql.validation import ASTValidationRule
 
     from strawberry.directive import StrawberryDirective
+<<<<<<< HEAD
     from strawberry.types.base import StrawberryType
     from strawberry.types.enum import EnumDefinition
     from strawberry.types.field import StrawberryField
@@ -92,6 +95,15 @@ OriginSubscriptionResult = Union[
     OriginalExecutionResult,
     AsyncIterator[OriginalExecutionResult],
 ]
+=======
+    from strawberry.enum import EnumDefinition
+    from strawberry.extensions import SchemaExtension
+    from strawberry.field import StrawberryField
+    from strawberry.identifier import SchemaIdentifier
+    from strawberry.type import StrawberryType
+    from strawberry.types import ExecutionResult
+    from strawberry.union import StrawberryUnion
+>>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
 
 DEFAULT_ALLOWED_OPERATION_TYPES = {
     OperationType.QUERY,

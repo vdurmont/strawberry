@@ -19,8 +19,12 @@ from typing import (
 
 from strawberry.annotation import StrawberryAnnotation
 from strawberry.exceptions import InvalidArgumentTypeError, InvalidDefaultFactoryError
+<<<<<<< HEAD:strawberry/types/field.py
 from strawberry.identifier import SupportedSchema
 from strawberry.types.base import (
+=======
+from strawberry.type import (
+>>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks):strawberry/field.py
     StrawberryType,
     WithStrawberryObjectDefinition,
     has_object_definition,
@@ -31,13 +35,16 @@ from .fields.resolver import StrawberryResolver
 
 if TYPE_CHECKING:
     import builtins
-
     from typing_extensions import Literal, Self
 
     from strawberry.extensions.field_extension import FieldExtension
+<<<<<<< HEAD:strawberry/types/field.py
     from strawberry.permission import BasePermission
     from strawberry.types.arguments import StrawberryArgument
     from strawberry.types.base import StrawberryObjectDefinition
+=======
+    from strawberry.identifier import SupportedSchema
+>>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks):strawberry/field.py
     from strawberry.types.info import Info
 
 T = TypeVar("T")
@@ -95,7 +102,7 @@ class StrawberryField(dataclasses.Field):
     ) -> None:
 =======
         extensions: List[FieldExtension] = (),  # type: ignore
-        supported_schemas: List[SupportedSchema] = None,
+        supported_schemas: Optional[List[SupportedSchema]] = None,
     ):
 >>>>>>> 78c24732 (Add support for `supported_schemas`):strawberry/field.py
         # basic fields are fields with no provided resolver
@@ -448,6 +455,7 @@ def field(
     extensions: Optional[list[FieldExtension]] = None,
     graphql_type: Optional[Any] = None,
 <<<<<<< HEAD:strawberry/types/field.py
+<<<<<<< HEAD:strawberry/types/field.py
 ) -> T: ...
 
 
@@ -470,6 +478,9 @@ def field(
 ) -> T: ...
 =======
     supported_schemas: List[SupportedSchema] = None,
+=======
+    supported_schemas: Optional[List[SupportedSchema]] = None,
+>>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks):strawberry/field.py
 ) -> T:
     ...
 >>>>>>> 78c24732 (Add support for `supported_schemas`):strawberry/field.py
@@ -491,9 +502,13 @@ def field(
     extensions: Optional[list[FieldExtension]] = None,
     graphql_type: Optional[Any] = None,
 <<<<<<< HEAD:strawberry/types/field.py
+<<<<<<< HEAD:strawberry/types/field.py
 ) -> Any: ...
 =======
     supported_schemas: List[SupportedSchema] = None,
+=======
+    supported_schemas: Optional[List[SupportedSchema]] = None,
+>>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks):strawberry/field.py
 ) -> Any:
     ...
 >>>>>>> 78c24732 (Add support for `supported_schemas`):strawberry/field.py
@@ -514,6 +529,7 @@ def field(
     directives: Optional[Sequence[object]] = (),
     extensions: Optional[list[FieldExtension]] = None,
     graphql_type: Optional[Any] = None,
+<<<<<<< HEAD:strawberry/types/field.py
 <<<<<<< HEAD:strawberry/types/field.py
 ) -> StrawberryField: ...
 
@@ -536,6 +552,9 @@ def field(
 ) -> StrawberryField: ...
 =======
     supported_schemas: List[SupportedSchema] = None,
+=======
+    supported_schemas: Optional[List[SupportedSchema]] = None,
+>>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks):strawberry/field.py
 ) -> StrawberryField:
     ...
 >>>>>>> 78c24732 (Add support for `supported_schemas`):strawberry/field.py
@@ -544,7 +563,7 @@ def field(
 def field(
     resolver: Optional[_RESOLVER_TYPE[Any]] = None,
     *,
-    schemas: List[str] = None,  # type: ignore
+    schemas: Optional[List[str]] = None,  # type: ignore
     name: Optional[str] = None,
     is_subscription: bool = False,
     description: Optional[str] = None,
@@ -560,7 +579,7 @@ def field(
     # is added in the constructor or not. It is not used to change
     # any behavior at the moment.
     init: Literal[True, False, None] = None,
-    supported_schemas: List[SupportedSchema] = None,
+    supported_schemas: Optional[List[SupportedSchema]] = None,
 ) -> Any:
     """Annotates a method or property as a GraphQL field.
 

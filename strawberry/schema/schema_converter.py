@@ -13,6 +13,7 @@ from typing import (
     Union,
     cast,
 )
+from typing_extensions import Protocol
 
 from graphql import (
     GraphQLAbstractType,
@@ -36,7 +37,6 @@ from graphql import (
     default_type_resolver,
 )
 from graphql.language.directive_locations import DirectiveLocation
-from typing_extensions import Protocol
 
 from strawberry.annotation import StrawberryAnnotation
 from strawberry.exceptions import (
@@ -47,8 +47,14 @@ from strawberry.exceptions import (
     ScalarAlreadyRegisteredError,
     UnresolvedFieldTypeError,
 )
+<<<<<<< HEAD
 from strawberry.extensions.field_extension import build_field_extension_resolvers
 from strawberry.identifier import SchemaIdentifier
+=======
+from strawberry.field import UNRESOLVED
+from strawberry.lazy_type import LazyType
+from strawberry.private import is_private
+>>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
 from strawberry.schema.types.scalar import _make_scalar_type
 from strawberry.types.arguments import StrawberryArgument, convert_arguments
 from strawberry.types.base import (
@@ -84,6 +90,12 @@ if TYPE_CHECKING:
     )
 
     from strawberry.directive import StrawberryDirective
+<<<<<<< HEAD
+=======
+    from strawberry.enum import EnumValue
+    from strawberry.field import StrawberryField
+    from strawberry.identifier import SchemaIdentifier
+>>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
     from strawberry.schema.config import StrawberryConfig
     from strawberry.schema_directive import StrawberrySchemaDirective
     from strawberry.types.enum import EnumValue
@@ -1040,6 +1052,7 @@ def _is_schema_supported(
     if not supported_schemas:
         # If we don't define any specific schema to support, we support everything
         return True
+<<<<<<< HEAD
     for schema in supported_schemas:
         if schema.matches(schema_identifier):
             # We try to find a supported schema that would match the current
@@ -1048,3 +1061,6 @@ def _is_schema_supported(
     # Nothing was found, the schema is not supported at all.
     return False
 >>>>>>> 78c24732 (Add support for `supported_schemas`)
+=======
+    return any(schema.matches(schema_identifier) for schema in supported_schemas)
+>>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
