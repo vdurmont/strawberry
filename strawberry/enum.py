@@ -12,6 +12,7 @@ from typing import (
     overload,
 )
 
+from strawberry.identifier import SupportedSchema
 from strawberry.type import StrawberryType
 
 from .exceptions import ObjectIsNotAnEnumError
@@ -24,6 +25,7 @@ class EnumValue:
     deprecation_reason: Optional[str] = None
     directives: Iterable[object] = ()
     description: Optional[str] = None
+    supported_schemas: Optional[List[SupportedSchema]] = None
 
 
 @dataclasses.dataclass
@@ -56,6 +58,7 @@ class EnumValueDefinition:
     deprecation_reason: Optional[str] = None
     directives: Iterable[object] = ()
     description: Optional[str] = None
+    supported_schemas: Optional[List[SupportedSchema]] = None
 
     def __int__(self) -> int:
         return self.value
@@ -66,12 +69,14 @@ def enum_value(
     deprecation_reason: Optional[str] = None,
     directives: Iterable[object] = (),
     description: Optional[str] = None,
+    supported_schemas: Optional[List[SupportedSchema]] = None,
 ) -> EnumValueDefinition:
     return EnumValueDefinition(
         value=value,
         deprecation_reason=deprecation_reason,
         directives=directives,
         description=description,
+        supported_schemas=supported_schemas,
     )
 
 
@@ -99,11 +104,13 @@ def _process_enum(
         deprecation_reason = None
         item_directives: Iterable[object] = ()
         enum_value_description = None
+        supported_schemas: Optional[List[SupportedSchema]] = None
 
         if isinstance(item_value, EnumValueDefinition):
             item_directives = item_value.directives
             enum_value_description = item_value.description
             deprecation_reason = item_value.deprecation_reason
+            supported_schemas = item_value.supported_schemas
             item_value = item_value.value
 
             # update _value2member_map_ so that doing `MyEnum.MY_VALUE` and
@@ -117,6 +124,7 @@ def _process_enum(
             deprecation_reason=deprecation_reason,
             directives=item_directives,
             description=enum_value_description,
+            supported_schemas=supported_schemas,
         )
         values.append(value)
 

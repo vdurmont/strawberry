@@ -14,7 +14,7 @@ def default_version_comparator(version1: str, version2: str) -> int:
 class SchemaIdentifier:
     name: str
     version: str
-    version_comparator: Callable[[str], int] = default_version_comparator
+    version_comparator: Callable[[str, str], int] = default_version_comparator
 
 
 @dataclass

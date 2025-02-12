@@ -25,6 +25,7 @@ from typing import (
 
 from strawberry.annotation import StrawberryAnnotation
 from strawberry.exceptions import InvalidArgumentTypeError, InvalidDefaultFactoryError
+from strawberry.identifier import SupportedSchema
 from strawberry.type import (
     StrawberryType,
     WithStrawberryObjectDefinition,
@@ -40,7 +41,6 @@ if TYPE_CHECKING:
 
     from strawberry.arguments import StrawberryArgument
     from strawberry.extensions.field_extension import FieldExtension
-    from strawberry.identifier import SupportedSchema
     from strawberry.types.info import Info
     from strawberry.types.types import StrawberryObjectDefinition
 
