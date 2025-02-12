@@ -19,12 +19,8 @@ from typing import (
 
 from strawberry.annotation import StrawberryAnnotation
 from strawberry.exceptions import InvalidArgumentTypeError, InvalidDefaultFactoryError
-<<<<<<< HEAD:strawberry/types/field.py
 from strawberry.identifier import SupportedSchema
 from strawberry.types.base import (
-=======
-from strawberry.type import (
->>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks):strawberry/field.py
     StrawberryType,
     WithStrawberryObjectDefinition,
     has_object_definition,
@@ -38,13 +34,10 @@ if TYPE_CHECKING:
     from typing_extensions import Literal, Self
 
     from strawberry.extensions.field_extension import FieldExtension
-<<<<<<< HEAD:strawberry/types/field.py
     from strawberry.permission import BasePermission
     from strawberry.types.arguments import StrawberryArgument
-    from strawberry.types.base import StrawberryObjectDefinition
-=======
     from strawberry.identifier import SupportedSchema
->>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks):strawberry/field.py
+    from strawberry.types.base import StrawberryObjectDefinition
     from strawberry.types.info import Info
 
 T = TypeVar("T")

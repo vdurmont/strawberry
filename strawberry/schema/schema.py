@@ -43,12 +43,9 @@ from strawberry.extensions.directives import (
     DirectivesExtension,
     DirectivesExtensionSync,
 )
-<<<<<<< HEAD
 from strawberry.extensions.runner import SchemaExtensionsRunner
 from strawberry.printer import print_schema
 from strawberry.identifier import SchemaIdentifier
-=======
->>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
 from strawberry.schema.schema_converter import GraphQLCoreConverter
 from strawberry.schema.types.scalar import DEFAULT_SCALAR_REGISTRY
 from strawberry.schema.validation_rules.one_of import OneOfInputValidationRule

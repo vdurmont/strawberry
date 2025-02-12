@@ -47,14 +47,8 @@ from strawberry.exceptions import (
     ScalarAlreadyRegisteredError,
     UnresolvedFieldTypeError,
 )
-<<<<<<< HEAD
 from strawberry.extensions.field_extension import build_field_extension_resolvers
 from strawberry.identifier import SchemaIdentifier
-=======
-from strawberry.field import UNRESOLVED
-from strawberry.lazy_type import LazyType
-from strawberry.private import is_private
->>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
 from strawberry.schema.types.scalar import _make_scalar_type
 from strawberry.types.arguments import StrawberryArgument, convert_arguments
 from strawberry.types.base import (
@@ -94,8 +88,12 @@ if TYPE_CHECKING:
 =======
     from strawberry.enum import EnumValue
     from strawberry.field import StrawberryField
+<<<<<<< HEAD
     from strawberry.identifier import SchemaIdentifier
 >>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
+=======
+    from strawberry.identifier import SchemaIdentifier, SupportedSchema
+>>>>>>> 399d1631 (Add supported_schemas to enum values)
     from strawberry.schema.config import StrawberryConfig
     from strawberry.schema_directive import StrawberrySchemaDirective
     from strawberry.types.enum import EnumValue
@@ -153,7 +151,7 @@ def _get_thunk_mapping(
             raise UnresolvedFieldTypeError(type_definition, field)
 
         if not is_private(field_type) and _is_schema_supported(
-            schema_identifier, field
+            schema_identifier, field.supported_schemas
         ):
             thunk_mapping[name_converter(field)] = field_converter(
                 field,
@@ -316,7 +314,7 @@ class GraphQLCoreConverter:
                 self.config.name_converter.from_enum_value(
                     enum, item
                 ): self.from_enum_value(item)
-                for item in enum.values
+                for item in enum.values if _is_schema_supported(self.schema_identifier, item.supported_schemas)
             },
             description=enum.description,
             extensions={
@@ -1046,9 +1044,8 @@ __all__ = ["GraphQLCoreConverter"]
 =======
 def _is_schema_supported(
     schema_identifier: Optional[SchemaIdentifier],
-    field: StrawberryField,
+    supported_schemas: Optional[List[SupportedSchema]],
 ) -> bool:
-    supported_schemas = field.supported_schemas or []
     if not supported_schemas:
         # If we don't define any specific schema to support, we support everything
         return True
