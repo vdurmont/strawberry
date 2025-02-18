@@ -5,19 +5,10 @@ from asyncio import ensure_future
 from collections.abc import AsyncGenerator, AsyncIterator, Awaitable, Iterable
 from functools import cached_property, lru_cache
 from inspect import isawaitable
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Optional,
-    Union,
-    cast,
-)
+from typing import TYPE_CHECKING, Any, Callable, Optional, Union, cast
 
 from graphql import ExecutionResult as GraphQLExecutionResult
-from graphql import (
-    ExecutionResult as OriginalExecutionResult,
-)
+from graphql import ExecutionResult as OriginalExecutionResult
 from graphql import (
     GraphQLBoolean,
     GraphQLError,
@@ -44,8 +35,8 @@ from strawberry.extensions.directives import (
     DirectivesExtensionSync,
 )
 from strawberry.extensions.runner import SchemaExtensionsRunner
-from strawberry.printer import print_schema
 from strawberry.identifier import SchemaIdentifier
+from strawberry.printer import print_schema
 from strawberry.schema.schema_converter import GraphQLCoreConverter
 from strawberry.schema.types.scalar import DEFAULT_SCALAR_REGISTRY
 from strawberry.schema.validation_rules.one_of import OneOfInputValidationRule
@@ -70,14 +61,16 @@ from .exceptions import InvalidOperationTypeError
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
-    from typing_extensions import TypeAlias
 
     from graphql import ExecutionContext as GraphQLExecutionContext
     from graphql.language import DocumentNode
     from graphql.validation import ASTValidationRule
+    from typing_extensions import TypeAlias
 
     from strawberry.directive import StrawberryDirective
-<<<<<<< HEAD
+    from strawberry.extensions import SchemaExtension
+    from strawberry.identifier import SchemaIdentifier
+    from strawberry.types import ExecutionResult
     from strawberry.types.base import StrawberryType
     from strawberry.types.enum import EnumDefinition
     from strawberry.types.field import StrawberryField
@@ -92,15 +85,6 @@ OriginSubscriptionResult = Union[
     OriginalExecutionResult,
     AsyncIterator[OriginalExecutionResult],
 ]
-=======
-    from strawberry.enum import EnumDefinition
-    from strawberry.extensions import SchemaExtension
-    from strawberry.field import StrawberryField
-    from strawberry.identifier import SchemaIdentifier
-    from strawberry.type import StrawberryType
-    from strawberry.types import ExecutionResult
-    from strawberry.union import StrawberryUnion
->>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
 
 DEFAULT_ALLOWED_OPERATION_TYPES = {
     OperationType.QUERY,
@@ -164,7 +148,7 @@ class Schema(BaseSchema):
             dict[object, Union[type, ScalarWrapper, ScalarDefinition]],
         ] = None,
         schema_directives: Iterable[object] = (),
-<<<<<<< HEAD
+        schema_identifier: Optional[SchemaIdentifier] = None,
     ) -> None:
         """Default Schema to be used in a Strawberry application.
 
@@ -201,10 +185,6 @@ class Schema(BaseSchema):
         schema = strawberry.Schema(query=Query)
         ```
         """
-=======
-        schema_identifier: Optional[SchemaIdentifier] = None,
-    ):
->>>>>>> 78c24732 (Add support for `supported_schemas`)
         self.query = query
         self.mutation = mutation
         self.subscription = subscription
@@ -225,11 +205,7 @@ class Schema(BaseSchema):
             scalar_registry.update(cast(SCALAR_OVERRIDES_DICT_TYPE, scalar_overrides))
 
         self.schema_converter = GraphQLCoreConverter(
-<<<<<<< HEAD
-            self.config, scalar_registry, self.get_fields
-=======
-            self.config, scalar_registry, self.schema_identifier
->>>>>>> 78c24732 (Add support for `supported_schemas`)
+            self.config, scalar_registry, self.get_fields, self.schema_identifier
         )
         self.directives = directives
         self.schema_directives = list(schema_directives)
@@ -375,9 +351,7 @@ class Schema(BaseSchema):
         )
 
     @lru_cache
-    def get_type_by_name(
-        self, name: str
-    ) -> Optional[
+    def get_type_by_name(self, name: str) -> Optional[
         Union[
             StrawberryObjectDefinition,
             ScalarDefinition,
@@ -617,7 +591,9 @@ class Schema(BaseSchema):
                         )
 
                 if execution_context.operation_type not in allowed_operation_types:
-                    raise InvalidOperationTypeError(execution_context.operation_type)  # noqa: TRY301
+                    raise InvalidOperationTypeError(
+                        execution_context.operation_type
+                    )  # noqa: TRY301
 
                 with extensions_runner.validation():
                     _run_validation(execution_context)

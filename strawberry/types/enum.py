@@ -1,24 +1,11 @@
 import dataclasses
 from collections.abc import Iterable, Mapping
 from enum import EnumMeta
-from typing import (
-    Any,
-    Callable,
-    Optional,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import Any, Callable, List, Optional, TypeVar, Union, overload
 
-<<<<<<< HEAD:strawberry/types/enum.py
 from strawberry.exceptions import ObjectIsNotAnEnumError
-from strawberry.types.base import StrawberryType
-=======
 from strawberry.identifier import SupportedSchema
-from strawberry.type import StrawberryType
-
-from .exceptions import ObjectIsNotAnEnumError
->>>>>>> 399d1631 (Add supported_schemas to enum values):strawberry/enum.py
+from strawberry.types.base import StrawberryType
 
 
 @dataclasses.dataclass

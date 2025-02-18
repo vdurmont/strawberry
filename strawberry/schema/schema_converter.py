@@ -3,17 +3,7 @@ from __future__ import annotations
 import dataclasses
 import sys
 from functools import partial, reduce
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Generic,
-    Optional,
-    TypeVar,
-    Union,
-    cast,
-)
-from typing_extensions import Protocol
+from typing import TYPE_CHECKING, Any, Callable, Generic, Optional, TypeVar, Union, cast
 
 from graphql import (
     GraphQLAbstractType,
@@ -37,6 +27,7 @@ from graphql import (
     default_type_resolver,
 )
 from graphql.language.directive_locations import DirectiveLocation
+from typing_extensions import Protocol
 
 from strawberry.annotation import StrawberryAnnotation
 from strawberry.exceptions import (
@@ -84,16 +75,7 @@ if TYPE_CHECKING:
     )
 
     from strawberry.directive import StrawberryDirective
-<<<<<<< HEAD
-=======
-    from strawberry.enum import EnumValue
-    from strawberry.field import StrawberryField
-<<<<<<< HEAD
-    from strawberry.identifier import SchemaIdentifier
->>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
-=======
     from strawberry.identifier import SchemaIdentifier, SupportedSchema
->>>>>>> 399d1631 (Add supported_schemas to enum values)
     from strawberry.schema.config import StrawberryConfig
     from strawberry.schema_directive import StrawberrySchemaDirective
     from strawberry.types.enum import EnumValue
@@ -122,13 +104,9 @@ def _get_thunk_mapping(
     type_definition: StrawberryObjectDefinition,
     name_converter: Callable[[StrawberryField], str],
     field_converter: FieldConverterProtocol[FieldType],
-<<<<<<< HEAD
     get_fields: Callable[[StrawberryObjectDefinition], list[StrawberryField]],
-) -> dict[str, FieldType]:
-=======
     schema_identifier: Optional[SchemaIdentifier],
-) -> Dict[str, FieldType]:
->>>>>>> 78c24732 (Add support for `supported_schemas`)
+) -> dict[str, FieldType]:
     """Create a GraphQL core `ThunkMapping` mapping of field names to field types.
 
     This method filters out remaining `strawberry.Private` annotated fields that
@@ -260,23 +238,15 @@ class GraphQLCoreConverter:
     def __init__(
         self,
         config: StrawberryConfig,
-<<<<<<< HEAD
         scalar_registry: dict[object, Union[ScalarWrapper, ScalarDefinition]],
         get_fields: Callable[[StrawberryObjectDefinition], list[StrawberryField]],
+        schema_identifier: Optional[SchemaIdentifier] = None,
     ) -> None:
         self.type_map: dict[str, ConcreteType] = {}
         self.config = config
         self.scalar_registry = scalar_registry
         self.get_fields = get_fields
-=======
-        scalar_registry: Dict[object, Union[ScalarWrapper, ScalarDefinition]],
-        schema_identifier: Optional[SchemaIdentifier] = None,
-    ):
-        self.type_map: Dict[str, ConcreteType] = {}
-        self.config = config
-        self.scalar_registry = scalar_registry
         self.schema_identifier = schema_identifier
->>>>>>> 78c24732 (Add support for `supported_schemas`)
 
     def from_argument(self, argument: StrawberryArgument) -> GraphQLArgument:
         argument_type = cast(
@@ -314,7 +284,8 @@ class GraphQLCoreConverter:
                 self.config.name_converter.from_enum_value(
                     enum, item
                 ): self.from_enum_value(item)
-                for item in enum.values if _is_schema_supported(self.schema_identifier, item.supported_schemas)
+                for item in enum.values
+                if _is_schema_supported(self.schema_identifier, item.supported_schemas)
             },
             description=enum.description,
             extensions={
@@ -470,11 +441,8 @@ class GraphQLCoreConverter:
             type_definition=type_definition,
             name_converter=self.config.name_converter.from_field,
             field_converter=self.from_field,
-<<<<<<< HEAD
             get_fields=self.get_fields,
-=======
             schema_identifier=self.schema_identifier,
->>>>>>> 78c24732 (Add support for `supported_schemas`)
         )
 
     def get_graphql_input_fields(
@@ -484,11 +452,8 @@ class GraphQLCoreConverter:
             type_definition=type_definition,
             name_converter=self.config.name_converter.from_field,
             field_converter=self.from_input_field,
-<<<<<<< HEAD
             get_fields=self.get_fields,
-=======
             schema_identifier=self.schema_identifier,
->>>>>>> 78c24732 (Add support for `supported_schemas`)
         )
 
     def from_input_object(self, object_type: type) -> GraphQLInputObjectType:
@@ -1039,17 +1004,13 @@ class GraphQLCoreConverter:
         raise DuplicatedTypeName(first_origin, second_origin, name)
 
 
-<<<<<<< HEAD
-__all__ = ["GraphQLCoreConverter"]
-=======
 def _is_schema_supported(
     schema_identifier: Optional[SchemaIdentifier],
-    supported_schemas: Optional[List[SupportedSchema]],
+    supported_schemas: Optional[list[SupportedSchema]],
 ) -> bool:
     if not supported_schemas:
         # If we don't define any specific schema to support, we support everything
         return True
-<<<<<<< HEAD
     for schema in supported_schemas:
         if schema.matches(schema_identifier):
             # We try to find a supported schema that would match the current
@@ -1057,7 +1018,6 @@ def _is_schema_supported(
             return True
     # Nothing was found, the schema is not supported at all.
     return False
->>>>>>> 78c24732 (Add support for `supported_schemas`)
-=======
-    return any(schema.matches(schema_identifier) for schema in supported_schemas)
->>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks)
+
+
+__all__ = ["GraphQLCoreConverter"]

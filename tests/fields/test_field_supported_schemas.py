@@ -1,8 +1,7 @@
-
 from strawberry import Schema, field
 from strawberry import type as graphql_type
-from strawberry.field import SupportedSchema
 from strawberry.identifier import SchemaIdentifier, default_version_comparator
+from strawberry.types.field import SupportedSchema
 
 
 @graphql_type

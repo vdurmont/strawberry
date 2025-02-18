@@ -31,12 +31,13 @@ from .fields.resolver import StrawberryResolver
 
 if TYPE_CHECKING:
     import builtins
+
     from typing_extensions import Literal, Self
 
     from strawberry.extensions.field_extension import FieldExtension
+    from strawberry.identifier import SupportedSchema
     from strawberry.permission import BasePermission
     from strawberry.types.arguments import StrawberryArgument
-    from strawberry.identifier import SupportedSchema
     from strawberry.types.base import StrawberryObjectDefinition
     from strawberry.types.info import Info
 
@@ -90,14 +91,9 @@ class StrawberryField(dataclasses.Field):
         metadata: Optional[Mapping[Any, Any]] = None,
         deprecation_reason: Optional[str] = None,
         directives: Sequence[object] = (),
-<<<<<<< HEAD:strawberry/types/field.py
         extensions: list[FieldExtension] = (),  # type: ignore
+        supported_schemas: Optional[list[SupportedSchema]] = None,
     ) -> None:
-=======
-        extensions: List[FieldExtension] = (),  # type: ignore
-        supported_schemas: Optional[List[SupportedSchema]] = None,
-    ):
->>>>>>> 78c24732 (Add support for `supported_schemas`):strawberry/field.py
         # basic fields are fields with no provided resolver
         is_basic_field = not base_resolver
 
@@ -447,8 +443,6 @@ def field(
     directives: Optional[Sequence[object]] = (),
     extensions: Optional[list[FieldExtension]] = None,
     graphql_type: Optional[Any] = None,
-<<<<<<< HEAD:strawberry/types/field.py
-<<<<<<< HEAD:strawberry/types/field.py
 ) -> T: ...
 
 
@@ -468,15 +462,8 @@ def field(
     directives: Optional[Sequence[object]] = (),
     extensions: Optional[list[FieldExtension]] = None,
     graphql_type: Optional[Any] = None,
+    supported_schemas: Optional[list[SupportedSchema]] = None,
 ) -> T: ...
-=======
-    supported_schemas: List[SupportedSchema] = None,
-=======
-    supported_schemas: Optional[List[SupportedSchema]] = None,
->>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks):strawberry/field.py
-) -> T:
-    ...
->>>>>>> 78c24732 (Add support for `supported_schemas`):strawberry/field.py
 
 
 @overload
@@ -494,17 +481,8 @@ def field(
     directives: Optional[Sequence[object]] = (),
     extensions: Optional[list[FieldExtension]] = None,
     graphql_type: Optional[Any] = None,
-<<<<<<< HEAD:strawberry/types/field.py
-<<<<<<< HEAD:strawberry/types/field.py
+    supported_schemas: Optional[list[SupportedSchema]] = None,
 ) -> Any: ...
-=======
-    supported_schemas: List[SupportedSchema] = None,
-=======
-    supported_schemas: Optional[List[SupportedSchema]] = None,
->>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks):strawberry/field.py
-) -> Any:
-    ...
->>>>>>> 78c24732 (Add support for `supported_schemas`):strawberry/field.py
 
 
 @overload
@@ -522,8 +500,6 @@ def field(
     directives: Optional[Sequence[object]] = (),
     extensions: Optional[list[FieldExtension]] = None,
     graphql_type: Optional[Any] = None,
-<<<<<<< HEAD:strawberry/types/field.py
-<<<<<<< HEAD:strawberry/types/field.py
 ) -> StrawberryField: ...
 
 
@@ -542,15 +518,8 @@ def field(
     directives: Optional[Sequence[object]] = (),
     extensions: Optional[list[FieldExtension]] = None,
     graphql_type: Optional[Any] = None,
+    supported_schemas: Optional[list[SupportedSchema]] = None,
 ) -> StrawberryField: ...
-=======
-    supported_schemas: List[SupportedSchema] = None,
-=======
-    supported_schemas: Optional[List[SupportedSchema]] = None,
->>>>>>> 77f100e4 ([pre-commit.ci] auto fixes from pre-commit.com hooks):strawberry/field.py
-) -> StrawberryField:
-    ...
->>>>>>> 78c24732 (Add support for `supported_schemas`):strawberry/field.py
 
 
 def field(
